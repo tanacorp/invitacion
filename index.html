@@ -27,27 +27,55 @@
         }
         @keyframes fairy-dust { to { transform: translateY(40px) scale(0); opacity: 0; } }
 
-        .book {
-            width: 90%; max-width: 400px; height: 580px;
-            position: relative;
-            background: #8b4513;
-            border-radius: 15px 25px 25px 15px;
-            padding-left: 10px;
-            box-shadow: 20px 20px 60px rgba(0,0,0,0.4);
+        /* EL LIBRO: Ajustado para mayor realismo y adaptabilidad */
+        .book { 
+            width: 95%; 
+            max-width: 400px; 
+            height: 80vh; 
+            max-height: 600px; 
+            position: relative; 
+            background: #8b4513; 
+            border-radius: 10px 25px 25px 10px; 
+            padding-left: 12px; /* Espacio para el lomo */
+            box-shadow: 25px 25px 60px rgba(0,0,0,0.5), inset 10px 0 15px rgba(0,0,0,0.3); 
         }
 
-        .page {
-            position: absolute; inset: 0; margin: 10px; padding: 40px 25px;
-            background-color: var(--page-bg);
+        .page { 
+            position: absolute; 
+            inset: 0; 
+            margin: 10px; 
+            padding: 20px; 
+            background-color: var(--page-bg); 
             background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
-            border: 6px double var(--gold);
-            border-radius: 5px 15px 15px 5px;
-            display: none; flex-direction: column; align-items: center;
-            justify-content: center; text-align: center; overflow: hidden;
+            border: 6px double var(--gold); 
+            border-radius: 5px 15px 15px 5px; 
+            display: none; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            text-align: center; 
+            overflow-y: auto;
+            box-shadow: inset 5px 0 10px rgba(0,0,0,0.1);
         }
 
         .page.active { display: flex; z-index: 10; animation: fadeIn 0.5s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } }
+
+        .nav-controls { 
+            position: absolute; 
+            bottom: -70px; 
+            width: 100%; 
+            display: flex; 
+            justify-content: space-between; 
+            z-index: 100; 
+            padding: 0 5px;
+        }
+
+        @media (max-height: 660px) {
+            .book { height: 75vh; }
+            .nav-controls { bottom: -60px; }
+            .name-title { font-size: 2.2rem; }
+        }
 
         .name-title { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--royal-blue); line-height: 1.1; margin: 15px 0; }
         .timer-unit { background: #f0f7ff; padding: 10px; border-radius: 10px; border: 1px solid var(--gold); min-width: 65px; }
@@ -59,10 +87,6 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        .nav-controls {
-            position: absolute; bottom: -70px; width: 100%;
-            display: flex; justify-content: space-between; z-index: 100;
-        }
         .btn-nav { background: white; border: 2px solid var(--gold); border-radius: 50%; width: 45px; height: 45px; color: var(--royal-blue); }
 
         .mensaje-burbuja {
@@ -83,7 +107,7 @@
     <source src="musica.mp3" type="audio/mpeg">
 </audio>
 
-<div class="book">
+<div class="book" id="bookContainer">
     <div class="page active">
         <i class="fas fa-crown fa-2x text-warning mb-2"></i>
         <p class="small text-muted mb-0">MIS 15 AÑOS</p>
@@ -94,6 +118,7 @@
             <div class="col-6"><b>Padrinos</b><br>Ayleen Canto<br>Euler Mamani</div>
         </div>
         <img src="carruaje.png" width="150" class="mt-4 opacity-100">
+        <div class="mt-2"><small class="text-primary" style="font-size: 0.7rem;"><i class="fas fa-magic"></i> Toca el libro para iniciar la magia</small></div>
     </div>
 
     <div class="page">
@@ -113,16 +138,16 @@
         <h5 class="text-primary mb-3"><i class="fas fa-map-marker-alt"></i> Recepción</h5>
         <p class="small mb-2"><b>El Rancho de Pol 2</b><br>Av. Los Ciruelos 492 - SJL</p>
         <div class="ratio ratio-16x9 mb-3 border rounded shadow-sm">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3902.502424056277!2d-77.0098056241031!3d-11.982631441113943!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c5632382cb29%3A0xa3e6a1ef662bc70c!2sEl%20Rancho%20de%20Pol%202!5e0!3m2!1ses!2spe!4v1710000000000!5m2!1ses!2spe" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3902.5028458315194!2d-77.0072307!3d-11.9826367!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c5632382cbc9%3A0xa3e6a1ef662bc710!2sEl%20Rancho%20de%20Pol%202!5e0!3m2!1ses!2spe!4v1700000000000!5m2!1ses!2spe" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
-        <a href="https://www.google.com/maps/dir/?api=1&destination=El+Rancho+de+Pol+2&destination_place_id=ChIJqcuCI2PFBZERDMcrZu-h5qM" target="_blank" class="btn btn-sm btn-primary btn-rounded shadow">
+        <a href="https://maps.app.goo.gl/hG5P7zN3r9K2C5Q8A" target="_blank" class="btn btn-sm btn-primary btn-rounded shadow">
             <i class="fas fa-route me-2"></i>Cómo llegar
         </a>
     </div>
 
     <div class="page">
         <i class="fas fa-magic text-info fa-3x mb-4"></i>
-        <h2 class="name-title" style="font-size: 2rem;">"Un sueño es un deseo que el corazón crea... hoy ese sueño despierta en mis quince años. Gracias por ser parte de este capítulo mágico donde empiezo a escribir mi propia historia."</h2>
+        <h2 class="name-title" style="font-size: 2rem;">"Un sueño es un deseo que el corazón crea... hoy ese sueño despierta en mis quince años."</h2>
         <p class="text-muted italic">- Hada Madrina</p>
     </div>
 
@@ -149,22 +174,50 @@
         </div>
     </div>
 
-    <div class="page">
-        <h5 class="text-primary mb-3">Confirmar Asistencia</h5>
+<div class="page">
+        <h5 class="text-primary mb-3" style="font-family: 'Playfair Display';">Confirmación de Asistencia</h5>
+        
+        <div class="p-2 mb-3" style="background-color: rgba(25, 118, 210, 0.03); border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 10px;">
+            <p class="text-muted" style="font-size: 0.7rem; line-height: 1.3; margin-bottom: 0;">
+                <i class="fas fa-info-circle text-primary"></i> 
+                Agradecemos su gentil comprensión al considerar que, para el mayor disfrute de todos, el evento se llevará a cabo en una atmósfera de adultos y jóvenes.
+            </p>
+        </div>
+
         <form id="formAsistencia" class="w-100 text-start small">
             <input type="hidden" name="tipo" value="asistencia">
-            <div class="mb-2">
-                <label class="fw-bold">Tu Nombre:</label>
-                <input type="text" name="nombre" class="form-control" required>
+            
+            <div class="mb-3">
+                <label class="fw-bold text-dark">¿Cómo asistirás?</label>
+                <select name="invitado1" class="form-select border-warning" required>
+                    <option value="" selected disabled>Selecciona una opción...</option>
+                    <option value="Sola/o">Asistiré Sola/o</option>
+                    <option value="Acompañada/o">Asistiré Acompañada/o</option>
+                </select>
+                <small class="text-muted" style="font-size: 0.6rem;">* Respete los pases indicados en su tarjeta física.</small>
             </div>
-            <div class="mb-2">
-                <label class="fw-bold">Acompañantes:</label>
-                <input type="text" name="invitado1" class="form-control mb-1" placeholder="Invitado 1">
-                <input type="text" name="invitado2" class="form-control" placeholder="Invitado 2">
+
+            <div class="mb-3">
+                <label class="fw-bold text-dark">Nombres completos y Ubicación:</label>
+                <textarea name="nombre" class="form-control border-warning" rows="3" 
+                          placeholder="Ej: Juan Pérez - Mesa (Adulto)&#10;Maria Ramos - Box (Joven)" required></textarea>
+                <p class="text-muted mt-1" style="font-size: 0.65rem; line-height: 1.2;">
+                    Por favor, indica si cada invitado va a <b>Mesa (Adulto)</b> o <b>Box (Joven)</b> para asignar su lugar.
+                </p>
             </div>
-            <button type="submit" class="btn btn-primary w-100 btn-rounded">Confirmar Lugar</button>
+
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="confirmIngreso" required>
+                <label class="form-check-label text-muted" for="confirmIngreso" style="font-size: 0.65rem;">
+                    Confirmo que esta información coincide con mi pase físico.
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 btn-rounded shadow-sm">
+                Confirmar Asistencia
+            </button>
         </form>
-        <div id="statusAsistencia" class="mt-2 small fw-bold"></div>
+        <div id="statusAsistencia" class="mt-2 small fw-bold text-center"></div>
     </div>
 
     <div class="page">
@@ -192,6 +245,12 @@
         <button class="btn btn-sm btn-outline-primary mt-2" onclick="cargarMensajes()">Actualizar</button>
     </div>
 
+    <div class="page">
+        <i class="fas fa-magic text-info fa-3x mb-4"></i>
+        <h2 class="name-title" style="font-size: 3rem;">"Gracias"</h2>
+        <p class="text-muted italic">- Adriana Solange</p>
+    </div>
+
     <div class="nav-controls">
         <button class="btn-nav" onclick="prev()"><i class="fas fa-chevron-left"></i></button>
         <button class="btn-nav" onclick="next()"><i class="fas fa-chevron-right"></i></button>
@@ -202,7 +261,11 @@
     let cur = 0;
     const pages = document.querySelectorAll('.page');
     function show(i) { pages.forEach((p, idx) => p.classList.toggle('active', i === idx)); }
-    function next() { if(cur < pages.length - 1) show(++cur); }
+    
+    function next() { 
+        activarMusica();
+        if(cur < pages.length - 1) show(++cur); 
+    }
     function prev() { if(cur > 0) show(--cur); }
 
     document.addEventListener('mousemove', e => {
@@ -213,12 +276,29 @@
         setTimeout(() => s.remove(), 800);
     });
 
-    function toggleMusic() {
-        const m = document.getElementById('bgMusic');
-        const b = document.getElementById('mBtn');
-        if (m.paused) { m.play(); b.innerHTML = '<i class="fas fa-pause"></i>'; }
-        else { m.pause(); b.innerHTML = '<i class="fas fa-music"></i>'; }
+    const music = document.getElementById('bgMusic');
+    const mBtn = document.getElementById('mBtn');
+
+    function activarMusica() {
+        if (music.paused) {
+            music.play().then(() => {
+                mBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            }).catch(e => console.log("Bloqueo de audio"));
+        }
     }
+
+    function toggleMusic() {
+        if (music.paused) {
+            music.play();
+            mBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        } else {
+            music.pause();
+            mBtn.innerHTML = '<i class="fas fa-music"></i>';
+        }
+    }
+
+    // Iniciar música al primer toque en el libro
+    document.getElementById('bookContainer').addEventListener('click', activarMusica);
 
     const scriptURL = 'https://script.google.com/macros/s/AKfycbz3xR_-JTUGbjcoIaTilE0fDej-X-wcvYd5yh0I0pcFNmNYbXq6-0Ju4i8RxdOln2v4xw/exec'; 
 
@@ -235,7 +315,12 @@
                     s.style.color = "green";
                     f.reset(); b.disabled = false; b.innerText = "Enviar otro";
                     if(formId === 'formSaludos') cargarMensajes();
-                }).catch(() => { s.innerText = "❌ Error"; s.style.color = "red"; b.disabled = false; b.innerText = "Reintentar"; });
+                }).catch(() => { 
+                    s.innerText = "❌ Error"; 
+                    s.style.color = "red"; 
+                    b.disabled = false; 
+                    b.innerText = "Reintentar"; 
+                });
         });
     }
 
