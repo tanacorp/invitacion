@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adriana Solange - Mis 15 Años</title>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --royal-blue: #1976d2;
+            --light-blue: #a2d2ff;
+            --silver: #bdc3c7;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            perspective: 1500px;
+        }
+
+        /* --- EFECTO MOUSE: POLVO DE HADAS --- */
+        .sparkle-mouse {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 0 10px #fff, 0 0 15px var(--light-blue);
+            animation: move-sparkle 1s linear forwards;
+        }
+        @keyframes move-sparkle {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: translateY(40px) scale(0); opacity: 0; }
+        }
+
+        /* --- LIBRO MÁGICO --- */
+        .book {
+            width: 380px;
+            height: 550px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            border-radius: 0 20px 20px 0;
+            padding: 35px 25px;
+            border: 1px solid #ddd;
+            display: none; /* Oculto por defecto */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: 10px 10px 25px rgba(0,0,0,0.1);
+        }
+
+        /* Solo la página activa se muestra */
+        .page.active {
+            display: flex;
+            z-index: 50;
+            animation: fadeInPage 0.5s ease-in-out;
+        }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* --- ESTILOS DE TEXTO --- */
+        .name-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
+            color: var(--royal-blue);
+            margin: 10px 0;
+        }
+
+        .timer-unit {
+            background: #f0f7ff;
+            padding: 10px;
+            border-radius: 12px;
+            min-width: 70px;
+            border: 1px solid var(--light-blue);
+        }
+
+        /* --- BOTONES --- */
+        .nav-controls {
+            position: absolute;
+            bottom: -70px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .btn-magic {
+            background: linear-gradient(45deg, var(--royal-blue), var(--light-blue));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 25px;
+            font-weight: 600;
+        }
+
+        iframe { border-radius: 15px; border: 1px solid var(--light-blue); }
+    </style>
+</head>
+<body>
+
+<div class="book" id="quinceBook">
+    
+    <div class="page active">
+        <i class="fas fa-crown fa-2x text-warning mb-3"></i>
+        <p class="small text-muted mb-0">MIS 15 AÑOS</p>
+        <h1 class="name-title">Adriana Solange</h1>
+        <hr class="w-50 mx-auto">
+        <div class="row w-100 small mt-3">
+            <div class="col-6">
+                <b class="text-primary">Padres</b><br>
+                José Carlos Nuñez<br>Jackeline Quispe
+            </div>
+            <div class="col-6">
+                <b class="text-primary">Padrinos</b><br>
+                Ayleen Canto<br>Euler Mamani
+            </div>
+        </div>
+        <img src="https://cdn-icons-png.flaticon.com/512/3209/3209503.png" width="90" class="mt-4 opacity-75">
+    </div>
+
+    <div class="page">
+        <h4 class="text-primary fw-bold mb-4">¡Falta Muy Poco!</h4>
+        <div class="d-flex justify-content-center gap-2">
+            <div class="timer-unit"><div id="d" class="h3 fw-bold mb-0">0</div><small>Días</small></div>
+            <div class="timer-unit"><div id="h" class="h3 fw-bold mb-0">00</div><small>Hrs</small></div>
+            <div class="timer-unit"><div id="m" class="h3 fw-bold mb-0">00</div><small>Min</small></div>
+        </div>
+        <div class="mt-5">
+            <p class="mb-0 text-muted">Sábado 27 de Diciembre</p>
+            <p class="fw-bold h5">7:30 PM</p>
+        </div>
+    </div>
+
+    <div class="page">
+        <h4 class="text-primary mb-3"><i class="fas fa-map-marker-alt"></i> Recepción</h4>
+        <p class="small mb-3"><b>Local "Rancho de Pol 2"</b><br>Av. Los Ciruelos 492 - SJL</p>
+        <div class="ratio ratio-16x9 shadow-sm mb-3">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3902.392555610534!2d-77.0012224!3d-11.9819722!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c589b3f9d5c5%3A0x6b8f3a3a3a3a3a3a!2sAv.%20Los%20Ciruelos%20492%2C%20San%20Juan%20de%20Lurigancho!5e0!3m2!1ses!2spe!4v1700000000000"></iframe>
+        </div>
+        <a href="https://maps.app.goo.gl/..." target="_blank" class="btn btn-outline-primary btn-rounded btn-sm">Ver en Maps</a>
+    </div>
+
+    <div class="page">
+        <i class="fas fa-magic fa-3x text-info mb-4"></i>
+        <h2 class="name-title" style="font-size: 2.2rem;">"Incluso los milagros toman un poco de tiempo"</h2>
+        <p class="text-muted italic">- Hada Madrina</p>
+    </div>
+
+    <div class="page">
+        <h5 class="text-primary mb-3">Confirmar Asistencia</h5>
+        <p class="small text-muted mb-3">Tus datos se guardarán en nuestra lista oficial.</p>
+        <form id="sheetForm" class="text-start w-100 p-3 border rounded-4 bg-light shadow-sm">
+            <div class="mb-3">
+                <label class="small fw-bold">Nombre Completo:</label>
+                <input type="text" name="nombre" class="form-control form-control-sm" required>
+            </div>
+            <div class="mb-3">
+                <label class="small fw-bold">Invitados Extras (Max 2):</label>
+                <input type="text" name="invitado1" class="form-control form-control-sm mb-2" placeholder="Invitado 2">
+                <input type="text" name="invitado2" class="form-control form-control-sm" placeholder="Invitado 3">
+            </div>
+            <button type="submit" id="btnSubmit" class="btn btn-primary w-100 btn-rounded">
+                Guardar Confirmación
+            </button>
+        </form>
+        <div id="statusMsg" class="mt-2 small fw-bold"></div>
+    </div>
+
+    <div class="nav-controls">
+        <button class="btn btn-floating btn-secondary shadow-0" onclick="prevPage()"><i class="fas fa-arrow-left"></i></button>
+        <button class="btn btn-floating btn-primary shadow-0" onclick="nextPage()"><i class="fas fa-arrow-right"></i></button>
+    </div>
+</div>
+
+<script>
+    // --- 1. NAVEGACIÓN DE LIBRO CORREGIDA ---
+    let currentPage = 0;
+    const pages = document.querySelectorAll('.page');
+
+    function showPage(index) {
+        pages.forEach((page, i) => {
+            page.classList.toggle('active', i === index);
+        });
+    }
+
+    function nextPage() {
+        if (currentPage < pages.length - 1) {
+            currentPage++;
+            showPage(currentPage);
+        }
+    }
+
+    function prevPage() {
+        if (currentPage > 0) {
+            currentPage--;
+            showPage(currentPage);
+        }
+    }
+
+    // --- 2. EFECTO MOUSE: POLVO DE HADAS ---
+    document.addEventListener('mousemove', (e) => {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle-mouse';
+        sparkle.style.left = e.clientX + 'px';
+        sparkle.style.top = e.clientY + 'px';
+        
+        // Colores aleatorios entre blanco y celeste
+        const colors = ['#ffffff', '#a2d2ff', '#e3f2fd'];
+        sparkle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 1000);
+    });
+
+    // --- 3. CONEXIÓN GOOGLE SHEETS ---
+    // SUSTITUYE ESTO CON TU URL DE IMPLEMENTACIÓN DE GOOGLE APPS SCRIPT
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyb3Hx_plyae9t6OreqXpDCfwo7-6iv_ttLBUEQRxpyN7nTHQZe-gCBP2AeVCF3NjT4aA/exec'; 
+    const form = document.getElementById('sheetForm');
+    const btn = document.getElementById('btnSubmit');
+    const status = document.getElementById('statusMsg');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        btn.disabled = true;
+        btn.innerText = "Guardando...";
+        status.innerText = "Conectando con el castillo...";
+
+        fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => {
+                status.innerHTML = "✨ ¡Confirmación guardada en el libro real!";
+                status.style.color = "green";
+                form.reset();
+                btn.disabled = false;
+                btn.innerText = "Guardar Confirmación";
+            })
+            .catch(error => {
+                status.innerHTML = "❌ Error al conectar. Inténtalo de nuevo.";
+                status.style.color = "red";
+                btn.disabled = false;
+                btn.innerText = "Guardar Confirmación";
+            });
+    });
+
+    // --- CONTADOR ---
+    const targetDate = new Date('December 27, 2025 19:30:00').getTime();
+    setInterval(() => {
+        const now = new Date().getTime();
+        const diff = targetDate - now;
+        document.getElementById('d').innerText = Math.max(0, Math.floor(diff / 86400000));
+        document.getElementById('h').innerText = Math.max(0, Math.floor((diff % 86400000) / 3600000));
+        document.getElementById('m').innerText = Math.max(0, Math.floor((diff % 3600000) / 60000));
+    }, 1000);
+</script>
+
+</body>
+</html>
