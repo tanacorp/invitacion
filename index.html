@@ -3,276 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adriana Solange - Mis 15 Años</title>
-    
+    <title>Adriana Solange - Invitación Real</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.1.0/mdb.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 
     <style>
-        :root {
-            --royal-blue: #1976d2;
-            --light-blue: #a2d2ff;
-            --silver: #bdc3c7;
-        }
-
+        :root { --royal-blue: #1976d2; --gold: #d4af37; --page-bg: #fdfaf1; }
+        
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-            margin: 0;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background: linear-gradient(135deg, #a2d2ff 0%, #ffffff 50%, #a2d2ff 100%);
+            margin: 0; min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
             overflow: hidden;
-            perspective: 1500px;
         }
 
-        /* --- EFECTO MOUSE: POLVO DE HADAS --- */
+        /* EFECTO MOUSE MÁGICO */
         .sparkle-mouse {
-            position: fixed;
-            width: 8px;
-            height: 8px;
-            background: white;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            box-shadow: 0 0 10px #fff, 0 0 15px var(--light-blue);
-            animation: move-sparkle 1s linear forwards;
+            position: fixed; width: 6px; height: 6px; background: white;
+            border-radius: 50%; pointer-events: none; z-index: 9999;
+            box-shadow: 0 0 10px #fff, 0 0 15px var(--royal-blue);
+            animation: fairy-dust 1s forwards;
         }
-        @keyframes move-sparkle {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: translateY(40px) scale(0); opacity: 0; }
-        }
+        @keyframes fairy-dust { to { transform: translateY(40px) scale(0); opacity: 0; } }
 
-        /* --- LIBRO MÁGICO --- */
+        /* ESTILO DEL LIBRO */
         .book {
-            width: 380px;
-            height: 550px;
+            width: 90%; max-width: 400px; height: 580px;
             position: relative;
-            z-index: 10;
+            background: #8b4513; /* Color lomo */
+            border-radius: 15px 25px 25px 15px;
+            padding-left: 10px;
+            box-shadow: 20px 20px 60px rgba(0,0,0,0.4);
         }
 
         .page {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: #fff;
-            border-radius: 0 20px 20px 0;
-            padding: 35px 25px;
-            border: 1px solid #ddd;
-            display: none; /* Oculto por defecto */
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            box-shadow: 10px 10px 25px rgba(0,0,0,0.1);
+            position: absolute; inset: 0;
+            margin: 10px;
+            padding: 40px 25px;
+            background-color: var(--page-bg);
+            background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+            border: 6px double var(--gold); /* Margen dorado */
+            border-radius: 5px 15px 15px 5px;
+            display: none; flex-direction: column; align-items: center;
+            justify-content: center; text-align: center;
+            overflow: hidden;
         }
 
-        /* Solo la página activa se muestra */
-        .page.active {
-            display: flex;
-            z-index: 50;
-            animation: fadeInPage 0.5s ease-in-out;
+        .page.active { display: flex; z-index: 10; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } }
+
+        .name-title { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--royal-blue); line-height: 1.1; margin: 15px 0; }
+        .timer-unit { background: #f0f7ff; padding: 10px; border-radius: 10px; border: 1px solid var(--gold); min-width: 65px; }
+        
+        /* BOTÓN MÚSICA */
+        .music-btn {
+            position: fixed; top: 20px; right: 20px; z-index: 1000;
+            background: white; border: 2px solid var(--gold);
+            border-radius: 50%; width: 45px; height: 45px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        @keyframes fadeInPage {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        /* --- ESTILOS DE TEXTO --- */
-        .name-title {
-            font-family: 'Great Vibes', cursive;
-            font-size: 3rem;
-            color: var(--royal-blue);
-            margin: 10px 0;
-        }
-
-        .timer-unit {
-            background: #f0f7ff;
-            padding: 10px;
-            border-radius: 12px;
-            min-width: 70px;
-            border: 1px solid var(--light-blue);
-        }
-
-        /* --- BOTONES --- */
         .nav-controls {
-            position: absolute;
-            bottom: -70px;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
+            position: absolute; bottom: -70px; width: 100%;
+            display: flex; justify-content: space-between;
         }
-
-        .btn-magic {
-            background: linear-gradient(45deg, var(--royal-blue), var(--light-blue));
-            color: white;
-            border: none;
-            border-radius: 50px;
-            padding: 12px 25px;
-            font-weight: 600;
-        }
-
-        iframe { border-radius: 15px; border: 1px solid var(--light-blue); }
+        .btn-nav { background: white; border: 2px solid var(--gold); border-radius: 50%; width: 45px; height: 45px; color: var(--royal-blue); }
     </style>
 </head>
 <body>
 
-<div class="book" id="quinceBook">
-    
+<button class="music-btn" onclick="toggleMusic()" id="mBtn"><i class="fas fa-music"></i></button>
+<audio id="bgMusic" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+</audio>
+
+<div class="book">
     <div class="page active">
-        <i class="fas fa-crown fa-2x text-warning mb-3"></i>
+        <i class="fas fa-crown fa-2x text-warning mb-2"></i>
         <p class="small text-muted mb-0">MIS 15 AÑOS</p>
         <h1 class="name-title">Adriana Solange</h1>
-        <hr class="w-50 mx-auto">
-        <div class="row w-100 small mt-3">
-            <div class="col-6">
-                <b class="text-primary">Padres</b><br>
-                José Carlos Nuñez<br>Jackeline Quispe
-            </div>
-            <div class="col-6">
-                <b class="text-primary">Padrinos</b><br>
-                Ayleen Canto<br>Euler Mamani
-            </div>
+        <hr class="w-75" style="border-top: 2px solid var(--gold);">
+        <div class="row w-100 small">
+            <div class="col-6"><b>Padres</b><br>José Carlos Nuñez<br>Jackeline Quispe</div>
+            <div class="col-6"><b>Padrinos</b><br>Ayleen Canto<br>Euler Mamani</div>
         </div>
-        <img src="https://cdn-icons-png.flaticon.com/512/3209/3209503.png" width="90" class="mt-4 opacity-75">
+        <img src="carruaje.png" width="200" class="mt-4 opacity-100">
     </div>
 
     <div class="page">
-        <h4 class="text-primary fw-bold mb-4">¡Falta Muy Poco!</h4>
-        <div class="d-flex justify-content-center gap-2">
+        <h4 class="text-primary mb-4 fw-bold">¡Falta Muy Poco!</h4>
+        <div class="d-flex gap-2">
             <div class="timer-unit"><div id="d" class="h3 fw-bold mb-0">0</div><small>Días</small></div>
             <div class="timer-unit"><div id="h" class="h3 fw-bold mb-0">00</div><small>Hrs</small></div>
             <div class="timer-unit"><div id="m" class="h3 fw-bold mb-0">00</div><small>Min</small></div>
         </div>
-        <div class="mt-5">
-            <p class="mb-0 text-muted">Sábado 27 de Diciembre</p>
-            <p class="fw-bold h5">7:30 PM</p>
+        <div class="mt-5 text-muted">
+            <p class="mb-0">Sábado 27 de Diciembre</p>
+            <p class="fw-bold h5 text-dark">7:30 PM</p>
         </div>
     </div>
 
     <div class="page">
-        <h4 class="text-primary mb-3"><i class="fas fa-map-marker-alt"></i> Recepción</h4>
-        <p class="small mb-3"><b>Local "Rancho de Pol 2"</b><br>Av. Los Ciruelos 492 - SJL</p>
-        <div class="ratio ratio-16x9 shadow-sm mb-3">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3902.392555610534!2d-77.0012224!3d-11.9819722!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c589b3f9d5c5%3A0x6b8f3a3a3a3a3a3a!2sAv.%20Los%20Ciruelos%20492%2C%20San%20Juan%20de%20Lurigancho!5e0!3m2!1ses!2spe!4v1700000000000"></iframe>
+        <h5 class="text-primary mb-3"><i class="fas fa-map-marker-alt"></i> Recepción</h5>
+        <p class="small mb-2"><b>El Rancho de Pol 2</b><br>Av. Los Ciruelos 492 - SJL</p>
+        
+        <div class="ratio ratio-16x9 mb-3 border rounded shadow-sm">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3902.502424056277!2d-77.0098056241031!3d-11.982631441113943!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c5632382cb29%3A0xa3e6a1ef662bc70c!2sEl%20Rancho%20de%20Pol%202!5e0!3m2!1ses!2spe!4v1710000000000!5m2!1ses!2spe" 
+                style="border:0;" allowfullscreen="" loading="lazy">
+            </iframe>
         </div>
-        <a href="https://maps.app.goo.gl/..." target="_blank" class="btn btn-outline-primary btn-rounded btn-sm">Ver en Maps</a>
+
+        <a href="https://www.google.com/maps/dir/?api=1&destination=El+Rancho+de+Pol+2&destination_place_id=ChIJqcuCI2PFBZERDMcrZu-h5qM" 
+           target="_blank" 
+           class="btn btn-sm btn-primary btn-rounded shadow">
+           <i class="fas fa-route me-2"></i>Cómo llegar
+        </a>
     </div>
 
     <div class="page">
-        <i class="fas fa-magic fa-3x text-info mb-4"></i>
-        <h2 class="name-title" style="font-size: 2.2rem;">"Incluso los milagros toman un poco de tiempo"</h2>
+        <i class="fas fa-magic text-info fa-3x mb-4"></i>
+        <h2 class="name-title" style="font-size: 2.3rem;">"Un sueño es un deseo que el corazón crea... hoy ese sueño despierta en mis quince años. Gracias por ser parte de este capítulo mágico donde empiezo a escribir mi propia historia."</h2>
         <p class="text-muted italic">- Hada Madrina</p>
     </div>
+	<div class="page">
+        <div class="mb-4">
+            <i class="fas fa-user-tie fa-2x text-primary mb-2"></i>
+            <h5 class="fw-bold" style="font-family: 'Playfair Display'; color: var(--royal-blue);">Código de Vestimenta</h5>
+            <p class="small">
+                <span class="badge rounded-pill shadow-sm" style="background-color: var(--royal-blue); font-size: 0.9rem;">Elegante / Gala</span>
+                <br><br>
+                Nos encantaría verte lucir tu mejor gala en esta noche de cuentos. 
+                <br>
+                <small class="text-muted">(Se reserva el color azul rey para la quinceañera)</small>
+            </p>
+        </div>
+        
+        <hr class="w-75 mx-auto" style="border-top: 1px double var(--gold);">
+        
+        <div class="mt-4">
+            <i class="fab fa-instagram fa-2x mb-2" style="color: #E1306C;"></i>
+            <h5 class="fw-bold" style="font-family: 'Playfair Display'; color: var(--royal-blue);">¡Comparte la Magia!</h5>
+            <p class="small">Ayúdanos a capturar cada momento usando nuestro hashtag oficial en tus fotos y videos:</p>
+            <div class="p-2 border rounded-3 bg-light shadow-sm">
+                <h4 class="mb-0 fw-bold" style="color: var(--royal-blue);">#Los15DeAdriana</h4>
+            </div>
+        </div>
+        
+        <div style="position: absolute; bottom: 15px; left: 15px; color: var(--gold); opacity: 0.5;">
+            <i class="fas fa-camera-retro"></i>
+        </div>
+    </div>
 
     <div class="page">
-        <h5 class="text-primary mb-3">Confirmar Asistencia</h5>
-        <p class="small text-muted mb-3">Tus datos se guardarán en nuestra lista oficial.</p>
-        <form id="sheetForm" class="text-start w-100 p-3 border rounded-4 bg-light shadow-sm">
+        <h5 class="text-primary mb-3">Libro de Invitados Real</h5>
+        <form id="sheetForm" class="w-100 text-start small">
             <div class="mb-3">
-                <label class="small fw-bold">Nombre Completo:</label>
-                <input type="text" name="nombre" class="form-control form-control-sm" required>
+                <label class="fw-bold">Nombre Completo:</label>
+                <input type="text" name="nombre" class="form-control" required>
             </div>
             <div class="mb-3">
-                <label class="small fw-bold">Invitados Extras (Max 2):</label>
-                <input type="text" name="invitado1" class="form-control form-control-sm mb-2" placeholder="Invitado 2">
-                <input type="text" name="invitado2" class="form-control form-control-sm" placeholder="Invitado 3">
+                <label class="fw-bold">Invitados Extras (Max 2):</label>
+                <input type="text" name="invitado1" class="form-control mb-1" placeholder="Invitado 1">
+                <input type="text" name="invitado2" class="form-control" placeholder="Invitado 2">
             </div>
-            <button type="submit" id="btnSubmit" class="btn btn-primary w-100 btn-rounded">
-                Guardar Confirmación
-            </button>
+            <button type="submit" id="btnSubmit" class="btn btn-primary w-100 btn-rounded">Confirmar</button>
         </form>
-        <div id="statusMsg" class="mt-2 small fw-bold"></div>
+        <div id="statusMsg" class="mt-3 small fw-bold"></div>
     </div>
 
     <div class="nav-controls">
-        <button class="btn btn-floating btn-secondary shadow-0" onclick="prevPage()"><i class="fas fa-arrow-left"></i></button>
-        <button class="btn btn-floating btn-primary shadow-0" onclick="nextPage()"><i class="fas fa-arrow-right"></i></button>
+        <button class="btn-nav" onclick="prev()"><i class="fas fa-chevron-left"></i></button>
+        <button class="btn-nav" onclick="next()"><i class="fas fa-chevron-right"></i></button>
     </div>
 </div>
 
 <script>
-    // --- 1. NAVEGACIÓN DE LIBRO CORREGIDA ---
-    let currentPage = 0;
+    let cur = 0;
     const pages = document.querySelectorAll('.page');
+    function show(i) { pages.forEach((p, idx) => p.classList.toggle('active', i === idx)); }
+    function next() { if(cur < pages.length - 1) show(++cur); }
+    function prev() { if(cur > 0) show(--cur); }
 
-    function showPage(index) {
-        pages.forEach((page, i) => {
-            page.classList.toggle('active', i === index);
-        });
-    }
-
-    function nextPage() {
-        if (currentPage < pages.length - 1) {
-            currentPage++;
-            showPage(currentPage);
-        }
-    }
-
-    function prevPage() {
-        if (currentPage > 0) {
-            currentPage--;
-            showPage(currentPage);
-        }
-    }
-
-    // --- 2. EFECTO MOUSE: POLVO DE HADAS ---
-    document.addEventListener('mousemove', (e) => {
-        const sparkle = document.createElement('div');
-        sparkle.className = 'sparkle-mouse';
-        sparkle.style.left = e.clientX + 'px';
-        sparkle.style.top = e.clientY + 'px';
-        
-        // Colores aleatorios entre blanco y celeste
-        const colors = ['#ffffff', '#a2d2ff', '#e3f2fd'];
-        sparkle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        
-        document.body.appendChild(sparkle);
-        setTimeout(() => sparkle.remove(), 1000);
+    document.addEventListener('mousemove', e => {
+        let s = document.createElement('div');
+        s.className = 'sparkle-mouse';
+        s.style.left = e.clientX + 'px'; s.style.top = e.clientY + 'px';
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 800);
     });
 
-    // --- 3. CONEXIÓN GOOGLE SHEETS ---
-    // SUSTITUYE ESTO CON TU URL DE IMPLEMENTACIÓN DE GOOGLE APPS SCRIPT
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyb3Hx_plyae9t6OreqXpDCfwo7-6iv_ttLBUEQRxpyN7nTHQZe-gCBP2AeVCF3NjT4aA/exec'; 
-    const form = document.getElementById('sheetForm');
-    const btn = document.getElementById('btnSubmit');
-    const status = document.getElementById('statusMsg');
+    function toggleMusic() {
+        const m = document.getElementById('bgMusic');
+        const b = document.getElementById('mBtn');
+        if (m.paused) { m.play(); b.innerHTML = '<i class="fas fa-pause"></i>'; }
+        else { m.pause(); b.innerHTML = '<i class="fas fa-music"></i>'; }
+    }
 
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwPWDOxrtKrbwjrWB64jIuUH4a-NiIeybb0zm2bthQ8LpNO640bE25mR7E4RXIf_mG_5w/exec'; // PASO IMPORTANTE ABAJO
+    const form = document.getElementById('sheetForm');
     form.addEventListener('submit', e => {
         e.preventDefault();
-        btn.disabled = true;
-        btn.innerText = "Guardando...";
-        status.innerText = "Conectando con el castillo...";
-
+        const btn = document.getElementById('btnSubmit');
+        const st = document.getElementById('statusMsg');
+        btn.disabled = true; btn.innerText = "Enviando...";
         fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-            .then(response => {
-                status.innerHTML = "✨ ¡Confirmación guardada en el libro real!";
-                status.style.color = "green";
-                form.reset();
-                btn.disabled = false;
-                btn.innerText = "Guardar Confirmación";
+            .then(() => {
+                st.innerText = "✨ ¡Confirmado en el libro real!";
+                st.style.color = "green";
+                form.reset(); btn.disabled = false; btn.innerText = "Confirmar";
             })
-            .catch(error => {
-                status.innerHTML = "❌ Error al conectar. Inténtalo de nuevo.";
-                status.style.color = "red";
-                btn.disabled = false;
-                btn.innerText = "Guardar Confirmación";
+            .catch(() => {
+                st.innerText = "❌ Error al conectar.";
+                st.style.color = "red";
+                btn.disabled = false; btn.innerText = "Confirmar";
             });
     });
 
-    // --- CONTADOR ---
-    const targetDate = new Date('December 27, 2025 19:30:00').getTime();
     setInterval(() => {
-        const now = new Date().getTime();
-        const diff = targetDate - now;
-        document.getElementById('d').innerText = Math.max(0, Math.floor(diff / 86400000));
-        document.getElementById('h').innerText = Math.max(0, Math.floor((diff % 86400000) / 3600000));
-        document.getElementById('m').innerText = Math.max(0, Math.floor((diff % 3600000) / 60000));
+        const d = new Date('December 27, 2025 19:30:00') - new Date();
+        document.getElementById('d').innerText = Math.max(0, Math.floor(d / 86400000));
+        document.getElementById('h').innerText = Math.max(0, Math.floor((d % 86400000) / 3600000));
+        document.getElementById('m').innerText = Math.max(0, Math.floor((d % 3600000) / 60000));
     }, 1000);
 </script>
-
 </body>
 </html>
