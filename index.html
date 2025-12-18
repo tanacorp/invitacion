@@ -9,24 +9,25 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
-<style>
-        /* --- ESTILO NUEVO: CRISTAL, PERLA Y PLATA --- */
+    <style>
+        /* --- ESTILO ROYAL VINTAGE: DORADO Y BEIGE --- */
         :root { 
-            /* Paleta Suave y Brillante */
-            --celeste-claro: #E1F5FE;  /* Fondo muy suave */
-            --celeste-vivo: #29B6F6;   /* Para detalles pequeños */
-            --celeste-texto: #0277BD;  /* Texto legible pero elegante */
+            /* Colores del Libro */
+            --dorado-oscuro: #8a6e3e;   /* Base de la pasta */
+            --dorado-brillo: #c5a059;   /* Brillo de la pasta */
+            --hoja-beige: #fffbf0;      /* Color crema suave */
+            --papel-borde: #d4af37;     /* Borde de hoja dorado */
+
+            /* Colores de Texto */
+            --texto-principal: #3e2723; /* Marrón café oscuro */
+            --azul-real: #1565c0;       /* Azul Royal */
             
-            --plata-brillo: #f5f5f5;   /* Blanco humo */
-            --plata-borde: #CFD8DC;    /* Borde metálico suave */
-            --gris-elegante: #546E7A;  /* Texto secundario (no negro) */
-            
-            --page-bg: #ffffff;       
+            --page-bg: #fffbf0;       
         }
         
         body {
             font-family: 'Poppins', sans-serif;
-            /* Asegúrate de que tu fondo.jpg sea bonito, si no, usa este degradado: */
+            /* Fondo general */
             background: url('fondo.jpg') no-repeat center center fixed; 
             background-size: cover;
             margin: 0; min-height: 100vh;
@@ -34,135 +35,189 @@
             overflow: hidden;
         }
 
-        /* EL LIBRO: Ahora es Blanco/Plateado (Más princesa, menos oscuro) */
+        /* EFECTO POLVO DE HADAS (FONDO) */
+        .fairy-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; 
+            z-index: 1; /* Nivel 1: Encima del fondo */
+            overflow: hidden;
+        }
+        .fairy-dust {
+        position: absolute;
+        bottom: -10px;
+        /* Quitamos el background aquí porque lo pondremos en el script */
+        border-radius: 50%;
+        /* CAMBIO CLAVE: Resplandor dorado intenso en lugar de blanco */
+        box-shadow: 0 0 15px 3px rgba(255, 215, 0, 0.6); 
+        opacity: 0;
+        animation: floatUp linear infinite;
+		}
+		
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.5; }
+            100% { transform: translateY(-100vh) scale(1); opacity: 0; }
+        }
+
+        /* EL LIBRO: Pasta Dorado Oscuro / Bronce */
         .book { 
             width: 95%; max-width: 400px; height: 80vh; max-height: 600px; 
             position: relative; 
-            /* Degradado Plata Perlado */
-            background: linear-gradient(45deg, #ECE9E6 0%, #FFFFFF 100%);
+            z-index: 10; /* Nivel 10: Encima de las hadas */
+            /* Degradado Metálico Dorado Oscuro */
+            background: linear-gradient(135deg, #5d4037 0%, #8a6e3e 50%, #5d4037 100%);
             border-radius: 10px 20px 20px 10px; 
-            padding-left: 15px; /* Lomo del libro */
-            /* Sombra suave y elegante */
-            box-shadow: 20px 20px 50px rgba(0,0,0,0.3), inset 5px 0 10px rgba(0,0,0,0.1); 
-            border: 1px solid #fff;
+            padding-left: 15px; 
+            /* Sombra cálida y borde dorado */
+            box-shadow: 25px 25px 60px rgba(40, 30, 10, 0.6), inset 5px 0 15px rgba(0,0,0,0.5); 
+            border: 1px solid #795548;
         }
 
-        /* LAS PÁGINAS: Limpias y con borde brillante */
+        /* LAS HOJAS: Beige con textura de papel */
         .page { 
             position: absolute; inset: 0; margin: 12px; padding: 25px 20px; 
-            background-color: #ffffff; 
-            /* Quitamos la textura de papel viejo, dejamos un blanco puro */
-            background-image: linear-gradient(to bottom right, #ffffff, #fbfbfb);
-            /* Borde doble fino en celeste muy pálido */
-            border: 4px double #B3E5FC; 
+            background-color: var(--hoja-beige); 
+            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+            border: 4px double var(--papel-borde); 
             border-radius: 5px 15px 15px 5px; 
             display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; 
             overflow-y: auto;
+            box-shadow: inset 0 0 30px rgba(139, 69, 19, 0.1); 
         }
 
         .page.active { display: flex; z-index: 10; animation: fadeIn 0.8s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } }
 
         .nav-controls { 
             position: absolute; bottom: -60px; width: 100%; 
             display: flex; justify-content: center; gap: 40px; z-index: 100; padding: 0 5px;
         }
 
-        /* BOTONES DE NAVEGACIÓN: Transparentes y minimalistas */
+        /* BOTONES DE NAVEGACIÓN: Dorados */
         .btn-nav { 
-            background: rgba(255, 255, 255, 0.8); 
-            border: 1px solid white; 
+            background: linear-gradient(to bottom, #fff8e1, #ffecb3); 
+            border: 1px solid var(--papel-borde); 
             border-radius: 50%; width: 50px; height: 50px; 
-            color: var(--celeste-texto); 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
-            backdrop-filter: blur(5px);
+            color: var(--texto-principal); 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); 
             transition: transform 0.2s;
         }
         .btn-nav:active { transform: scale(0.9); }
 
-        /* TIPOGRAFÍA: Mis 15 Años (Estilo Fino) */
+        /* TIPOGRAFÍA: Mis 15 Años */
         .mis-15-titulo {
             font-family: 'Playfair Display', serif;
             font-size: 1.2rem;
-            color: var(--gris-elegante);
-            letter-spacing: 5px; /* Muy espaciado = Muy elegante */
+            color: var(--texto-principal);
+            letter-spacing: 5px; 
             text-transform: uppercase;
-            border-bottom: 1px solid var(--celeste-vivo);
+            border-bottom: 2px solid var(--papel-borde);
             padding-bottom: 8px;
             margin-bottom: 10px;
             display: inline-block;
         }
 
-        /* TIPOGRAFÍA: Nombre (Cursiva Grande) */
+        /* TIPOGRAFÍA: Nombre (Con Brillo y Pausa) */
         .name-title { 
             font-family: 'Great Vibes', cursive; 
-            font-size: 3rem; 
-            /* Degradado en el texto */
-            background: -webkit-linear-gradient(45deg, #0288D1, #26C6DA);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: 3.5rem; 
             line-height: 1.1; 
             margin: 10px 0; 
+            
+            /* El degradado del brillo */
+            background: linear-gradient(
+                to right, 
+                #1565c0 0%, 
+                #42a5f5 40%, 
+                #ffffff 50%, 
+                #42a5f5 60%, 
+                #1565c0 100%
+            );
+            background-size: 200% auto;
+            
+            /* Configuración para máscara de texto */
+            color: #1565c0; 
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            
+            /* Animación de 6s con pausa */
+            animation: shineWithPause 6s ease-in-out infinite;
             filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.1));
         }
 
-        /* CONTADORES (Cajas limpias) */
+        @keyframes shineWithPause {
+            0% { background-position: 0% center; }
+            30% { background-position: 200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        /* CONTADORES (Estilo Pergamino) */
         .timer-unit { 
             background: #fff;
             padding: 8px; border-radius: 8px; 
-            border: 1px solid #E1F5FE; 
+            border: 1px solid var(--papel-borde); 
             min-width: 60px; 
-            box-shadow: 0 4px 10px rgba(179, 229, 252, 0.4);
-            color: var(--celeste-texto);
+            box-shadow: 0 2px 5px rgba(139, 69, 19, 0.1);
+            color: var(--texto-principal);
         }
 
-        /* TEXTOS GENERALES */
-        p, .small, label { color: var(--gris-elegante); }
-        b, strong { color: var(--celeste-texto); font-weight: 600; }
+        /* ELEMENTOS DEL FORMULARIO Y TEXTOS */
+        p, .small, label { color: var(--texto-principal); }
+        b, strong { color: var(--azul-real); font-weight: 600; }
+        .text-muted { color: #8d6e63 !important; }
 
-        /* BOTONES DEL FORMULARIO */
+        /* BOTONES */
         .btn-celeste { 
-            background: linear-gradient(to right, #29B6F6, #039BE5);
-            color: white; border: none; font-weight: 500; letter-spacing: 1px;
-            box-shadow: 0 4px 10px rgba(3, 155, 229, 0.3);
+            background: linear-gradient(45deg, #1565c0, #0d47a1);
+            color: white; border: 1px solid #fff;
+            box-shadow: 0 4px 5px rgba(0,0,0,0.2);
+        }
+        .btn-celeste:hover {
+            background: linear-gradient(45deg, #0d47a1, #1565c0);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.3);
+            color: #ffecb3;
         }
         
         .btn-plata { 
-            background: white; border: 1px solid var(--plata-borde); color: var(--gris-elegante);
+            background: #fff8e1; border: 1px solid var(--papel-borde); color: var(--texto-principal);
         }
 
-        /* ALERTAS Y NOTAS (Más suaves) */
+        /* ALERTAS Y NOTAS */
         .nota-elegante {
-            background-color: #F1F8E9; /* O un azul muy lavanda */
-            background: linear-gradient(to right, #fbfbfb, #e1f5fe);
-            border-left: 4px solid var(--celeste-vivo);
-            padding: 15px; border-radius: 5px;
-            font-size: 0.8rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            background-color: #fff3e0;
+            border-left: 4px solid var(--papel-borde);
+            padding: 10px; border-radius: 5px;
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
         }
-
-        /* Inputs del formulario más bonitos */
+        
+        /* Ajustes de colores */
+        .text-celeste { color: var(--azul-real) !important; }
+        .text-plata { color: var(--papel-borde) !important; }
+        .border-celeste { border-color: var(--papel-borde) !important; }
+        
+        /* Inputs */
         .form-control, .form-select {
-            border: 1px solid #E0E0E0;
-            background-color: #FAFAFA;
-            border-radius: 8px;
-        }
-        .form-control:focus {
-            border-color: var(--celeste-vivo);
-            box-shadow: 0 0 0 4px rgba(41, 182, 246, 0.1);
+            background-color: #fff;
+            border: 1px solid var(--papel-borde);
         }
     </style>
 </head>
 <body>
 
-<button class="music-btn" onclick="toggleMusic()" id="mBtn"><i class="fas fa-music"></i></button>
 <audio id="bgMusic" loop>
     <source src="musica.mp3" type="audio/mpeg">
 </audio>
 
+<div class="fairy-container" id="fairyContainer"></div>
+
 <div class="book" id="bookContainer">
+    
     <div class="page active">
-        <i class="fas fa-crown fa-2x text-muted mb-3" style="opacity: 0.5;"></i>
+        <div class="mb-3 animate__animated animate__fadeInDown">
+             <img src="corona.png" alt="Corona Real" style="width: 60px; height: auto; opacity: 0.8;">
+        </div>
         
         <div class="animate__animated animate__fadeInDown">
             <span class="mis-15-titulo">Mis 15 Años</span>
@@ -186,22 +241,28 @@
         <img src="carruaje.png" width="140" class="mt-4" style="opacity: 0.9;">
         
         <div class="mt-4 animate__animated animate__pulse animate__infinite">
-            <small style="color: var(--celeste-texto); font-size: 0.7rem; letter-spacing: 1px;">
-                TOCA PARA ENTRAR
+            <small style="color: var(--azul-real); font-size: 0.7rem; letter-spacing: 1px; font-weight: bold;">
+                <i class="fas fa-hand-pointer"></i> TOCA PARA ENTRAR
             </small>
         </div>
     </div>
 
-    <div class="page">
-        <h4 class="text-celeste mb-4 fw-bold">¡Falta Muy Poco!</h4>
-        <div class="d-flex gap-2">
-            <div class="timer-unit"><div id="d" class="h3 fw-bold mb-0 text-secondary">0</div><small>Días</small></div>
-            <div class="timer-unit"><div id="h" class="h3 fw-bold mb-0 text-secondary">00</div><small>Hrs</small></div>
-            <div class="timer-unit"><div id="m" class="h3 fw-bold mb-0 text-secondary">00</div><small>Min</small></div>
+   <div class="page">
+        <div class="mb-3 animate__animated animate__fadeInDown">
+            <img src="mariposa.png" alt="Mariposa" style="width: 70px; height: auto; opacity: 0.9;">
         </div>
-        <div class="mt-5 text-muted">
+
+        <h4 class="text-celeste mb-4 fw-bold">¡Falta Muy Poco!</h4>
+        
+        <div class="d-flex gap-2">
+            <div class="timer-unit"><div id="d" class="h3 fw-bold mb-0">0</div><small>Días</small></div>
+            <div class="timer-unit"><div id="h" class="h3 fw-bold mb-0">00</div><small>Hrs</small></div>
+            <div class="timer-unit"><div id="m" class="h3 fw-bold mb-0">00</div><small>Min</small></div>
+        </div>
+        
+        <div class="mt-4 text-muted">
             <p class="mb-0">Sábado 27 de Diciembre</p>
-            <p class="fw-bold h5 text-dark">7:30 PM</p>
+            <p class="fw-bold h5" style="color: var(--texto-principal);">7:30 PM</p>
         </div>
     </div>
 
@@ -209,21 +270,21 @@
         <h5 class="text-celeste mb-2"><i class="fas fa-map-marker-alt"></i> Recepción</h5>
         <p class="small mb-2"><b>El Rancho de Pol 2</b><br>Av. Los Ciruelos 492 - SJL</p>
         
-        <div class="p-2 mb-2 rounded-3 text-dark border shadow-sm" style="background: #e1f5fe; border-color: var(--celeste); font-size: 0.7rem;">
+        <div class="p-2 mb-2 rounded-3 text-dark border shadow-sm" style="background: #e1f5fe; border-color: var(--azul-real); font-size: 0.7rem;">
             <i class="fas fa-star text-celeste"></i> Contamos con ambientes exclusivos:<br>
             <strong>Salón de Gala (Adultos)</strong> & <strong>Zona Lounge (Jóvenes)</strong>
         </div>
 
-        <<div class="ratio ratio-16x9 mb-3 border rounded shadow-sm">
+        <div class="ratio ratio-16x9 mb-3 border rounded shadow-sm">
             <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3902.502424056277!2d-77.0098056241031!3d-11.982631441113943!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c5632382cb29%3A0xa3e6a1ef662bc70c!2sEl%20Rancho%20de%20Pol%202!5e0!3m2!1ses!2spe!4v1710000000000!5m2!1ses!2spe" 
-                style="border:0;" allowfullscreen="" loading="lazy">
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3902.464627196023!2d-77.00980562413768!3d-11.982636788249033!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c5632382cbd9%3A0x93e6a1ef672bc70c!2sEl%20Rancho%20de%20Pol%202!5e0!3m2!1ses-419!2spe!4v1709123456789!5m2!1ses-419!2spe" 
+                style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
             </iframe>
         </div>
 
-        <a href="https://www.google.com/maps/dir/?api=1&destination=El+Rancho+de+Pol+2&destination_place_id=ChIJqcuCI2PFBZERDMcrZu-h5qM" 
+        <a href="https://www.google.com/maps/place/El+Rancho+de+Pol+2/@-11.9826368,-77.0072307,17z/data=!3m1!4b1!4m6!3m5!1s0x9105c5632382cbd9:0x93e6a1ef672bc70c!8m2!3d-11.9826368!4d-77.0072307!16s%2Fg%2F11b6g7_3m_?entry=ttu" 
            target="_blank" 
-           class="btn btn-sm btn-primary btn-rounded shadow">
+           class="btn btn-sm btn-celeste btn-rounded shadow">
            <i class="fas fa-route me-2"></i>Cómo llegar
         </a>
     </div>
@@ -234,11 +295,14 @@
         </div>
         
         <h2 class="name-title" style="
-            font-size: 1.6rem;       /* Tamaño un poco más pequeño para que no se amontone */
-            line-height: 1.6;        /* Mayor espacio entre líneas */
-            letter-spacing: 1px;     /* Espacio adicional entre cada letra cursiva */
-            padding: 0 15px;         /* Márgenes laterales para que no toque los bordes */
-            color: var(--celeste-dark); /* Color azul oscuro para buen contraste */
+            font-size: 1.6rem;
+            line-height: 1.6;
+            letter-spacing: 1px;
+            padding: 0 15px;
+            color: var(--azul-real); /* Ajustado a variable correcta */
+            animation: none; /* Quitamos brillo en texto largo para leer mejor */
+            background: none;
+            -webkit-text-fill-color: var(--azul-real);
         ">
             "Cumplir Quince Años y compartirlo con los que amo, es una manera de ser feliz. Estos Quince Años me han sido dados para que fortalezcan con los dones que Dios me dio en todos los actos de mi vida."
         </h2>
@@ -253,14 +317,14 @@
             <i class="fas fa-user-tie fa-2x text-celeste mb-2"></i>
             <h5 class="fw-bold">Código de Vestimenta</h5>
             <p class="small">
-                <span class="badge rounded-pill shadow-sm" style="background-color: var(--celeste-dark); font-size: 0.9rem;">Elegante / Gala</span>
+                <span class="badge rounded-pill shadow-sm" style="background-color: var(--azul-real); font-size: 0.9rem;">Elegante / Gala</span>
                 <br><br>
                 Nos encantaría verte lucir tu mejor gala.
                 <br>
                 <small class="text-muted">(Se reserva el color Celeste para la quinceañera)</small>
             </p>
         </div>
-        <hr class="w-75 mx-auto" style="border-top: 1px double var(--plata-borde);">
+        <hr class="w-75 mx-auto" style="border-top: 1px double var(--papel-borde);">
         <div class="mt-4">
             <i class="fab fa-instagram fa-2x mb-2" style="color: #E1306C;"></i>
             <h5 class="fw-bold">¡Comparte la Magia!</h5>
@@ -274,7 +338,7 @@
     <div class="page">
         <h5 class="text-celeste mb-3" style="font-family: 'Playfair Display';">Confirmación de Asistencia</h5>
         
-        <div class="p-3 mb-3 shadow text-center" style="background-color: #e3f2fd; border: 2px solid var(--celeste-dark); border-radius: 10px;">
+        <div class="p-3 mb-3 shadow text-center" style="background-color: #e3f2fd; border: 2px solid var(--azul-real); border-radius: 10px;">
             <i class="fas fa-info-circle fa-2x mb-2 text-primary animate__animated animate__pulse animate__infinite"></i>
             <p class="mb-0 fw-bold" style="color: #0d47a1; font-size: 0.75rem; line-height: 1.4;">
                 Agradecemos su gentil comprensión al considerar que, para el mayor disfrute de todos, el evento se llevará a cabo en una atmósfera exclusiva de adultos y jóvenes.
@@ -300,7 +364,7 @@
 Juan Pérez - Mesa (Adulto)
 Maria Ramos - Box (Joven)" required></textarea>
                 
-                <div class="alert mt-2 mb-0 p-2 text-dark shadow-sm" style="font-size: 0.75rem; background-color: #bbdefb; border: 1px solid var(--celeste-dark);">
+                <div class="alert mt-2 mb-0 p-2 text-dark shadow-sm" style="font-size: 0.75rem; background-color: #bbdefb; border: 1px solid var(--azul-real);">
                     <i class="fas fa-exclamation-circle text-primary"></i> <strong>ATENCIÓN:</strong> Por favor, especifica si cada invitado va a <span class="badge bg-primary">MESA (Adulto)</span> o <span class="badge bg-info text-dark">BOX (Joven)</span>.
                 </div>
             </div>
@@ -313,33 +377,45 @@ Maria Ramos - Box (Joven)" required></textarea>
     </div>
 
     <div class="page">
+        <img src="mariposa.png" alt="Mariposa" class="mb-2" style="width: 50px; height: auto;">
+        
         <h5 class="text-celeste mb-3">Envía un Deseo Mágico</h5>
+        
         <form id="formSaludos" class="w-100 text-start small">
             <input type="hidden" name="tipo" value="saludo">
             <div class="mb-2">
                 <label class="fw-bold">Tu Nombre:</label>
-                <input type="text" name="nombre" class="form-control border-celeste" required>
+                <input type="text" name="nombre" class="form-control" required>
             </div>
             <div class="mb-3">
                 <label class="fw-bold">Mensaje para Adriana:</label>
-                <textarea name="mensaje" class="form-control border-celeste" rows="4" maxlength="300" required></textarea>
+                <textarea name="mensaje" class="form-control" rows="4" maxlength="300" required></textarea>
             </div>
-            <button type="submit" class="btn btn-plata w-100 btn-rounded">Enviar Saludo</button>
+            <button type="submit" class="btn btn-plata w-100 btn-rounded shadow-sm">
+                Enviar Saludo
+            </button>
         </form>
-        <div id="statusSaludos" class="mt-2 small fw-bold"></div>
+        <div id="statusSaludos" class="mt-2 small fw-bold text-center"></div>
     </div>
 
     <div class="page">
-        <h5 class="text-celeste mb-3">Muro de Deseos</h5>
+        <div class="d-flex align-items-center justify-content-center mb-3">
+            <img src="mariposa.png" alt="Mariposa" style="width: 40px; margin-right: 10px;">
+            <h5 class="text-celeste mb-0">Muro de Deseos</h5>
+        </div>
+
         <div id="muroMensajes" style="overflow-y: auto; max-height: 420px; width: 100%;" class="p-2">
             <p class="small text-muted">Cargando...</p>
         </div>
-        <button class="btn btn-sm btn-outline-info mt-2" onclick="cargarMensajes()">Actualizar</button>
+        
+        <button class="btn btn-sm btn-outline-secondary mt-2" onclick="cargarMensajes()">
+            <i class="fas fa-sync-alt"></i> Actualizar
+        </button>
     </div>
 
     <div class="page">
         <div class="mb-3 animate__animated animate__fadeInUp">
-            <i class="fas fa-crown fa-4x text-celeste" style="filter: drop-shadow(0px 4px 6px rgba(79, 195, 247, 0.4));"></i>
+             <img src="corona.png" alt="Corona Real" style="width: 100px; height: auto; filter: drop-shadow(0px 4px 6px rgba(79, 195, 247, 0.4));">
         </div>
         
         <h2 class="name-title" style="font-size: 4rem; margin-bottom: 0;">"Gracias"</h2>
@@ -350,8 +426,17 @@ Maria Ramos - Box (Joven)" required></textarea>
     </div>
 
     <div class="nav-controls">
-        <button class="btn-nav" onclick="prev()"><i class="fas fa-chevron-left"></i></button>
-        <button class="btn-nav" onclick="next()"><i class="fas fa-chevron-right"></i></button>
+        <button class="btn-nav" onclick="prev()">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        
+        <button class="btn-nav" onclick="toggleMusic()" id="mBtn">
+            <i class="fas fa-music"></i>
+        </button>
+        
+        <button class="btn-nav" onclick="next()">
+            <i class="fas fa-chevron-right"></i>
+        </button>
     </div>
 </div>
 
@@ -409,7 +494,7 @@ Maria Ramos - Box (Joven)" required></textarea>
             fetch(scriptURL, { method: 'POST', body: new FormData(f)})
                 .then(() => {
                     s.innerText = "✨ ¡Enviado con éxito!";
-                    s.style.color = "var(--celeste-dark)";
+                    s.style.color = "var(--azul-real)";
                     f.reset(); b.disabled = false; b.innerText = "Enviar otro";
                     if(formId === 'formSaludos') cargarMensajes();
                 }).catch(() => { 
@@ -443,6 +528,36 @@ Maria Ramos - Box (Joven)" required></textarea>
             document.getElementById('m').innerText = Math.max(0, Math.floor((target % 3600000) / 60000));
         }, 1000);
     };
+
+    // SCRIPT PARA GENERAR POLVO DE HADAS (MUCHO MÁS ABUNDANTE)
+    const container = document.getElementById('fairyContainer');
+    
+    // CAMBIO: Aumentamos a 100 para que se vea lleno
+    const particleCount = 100; 
+
+    for (let i = 0; i < particleCount; i++) {
+        let dust = document.createElement('div');
+        dust.className = 'fairy-dust';
+        
+        // Tamaños variados para dar profundidad (unas lejos, otras cerca)
+        let size = Math.random() * 8 + 3; // Entre 3px y 11px
+        dust.style.width = size + 'px';
+        dust.style.height = size + 'px';
+        
+        // Posición aleatoria en toda la pantalla
+        dust.style.left = Math.random() * 100 + 'vw';
+        
+        // Velocidades distintas para que no se vea repetitivo
+        dust.style.animationDuration = (Math.random() * 15 + 8) + 's'; 
+        dust.style.animationDelay = Math.random() * 8 + 's'; // Retraso aleatorio para que no salgan todas de golpe
+        
+        // COLOR ORO INTENSO
+        let goldShade = Math.random() > 0.5 ? '#FFD700' : '#FFC107'; 
+        dust.style.background = goldShade;
+        
+        container.appendChild(dust);
+    }
+    
 </script>
 </body>
 </html>
